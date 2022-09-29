@@ -9,15 +9,34 @@ export function internalMint({
     tokenId,
     metadata,
     receiverId,
-    perpetualRoyalties
-}:{ 
-    contract: Contract, 
-    tokenId: string, 
-    metadata: TokenMetadata, 
-    receiverId: string 
-    perpetualRoyalties: {[key: string]: number}
+    perpetualRoyalties,
+}: {
+    contract: Contract;
+    tokenId: string;
+    metadata: TokenMetadata;
+    receiverId: string;
+    perpetualRoyalties: { [key: string]: number };
 }): void {
     /*
         FILL THIS IN
     */
+    let initialStorageUsage = near.storageUsage();
+
+    let token = new Token({
+        ownerId: receiverId,
+        approvedAccountIds: {},
+        nextApprovalId: 0,
+    });
+
+    assert(!contract.tokensById.containsKey(tokenId), "Token already exists");
+    contract.tokensById.set(tokenId, token);
+
+    contract.tokenMetadataById.set(tokenId, metadata);
+
+    internalAddTokenToOwner(contract, token.owner_id, tokenId);
+
+    let requiredStorageInBytes =
+        near.storageUsage().valueOf() - initialStorageUsage.valueOf();
+
+    refundDeposit(requiredStorageInBytes);
 }
