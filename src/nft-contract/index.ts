@@ -63,8 +63,8 @@ export class Contract extends NearContract {
         owner_id,
         metadata = {
             spec: "nft-1.0.0",
-            name: "NFT Tutorial Contract",
-            symbol: "GOTEAM",
+            name: "NearPass",
+            symbol: "NP",
         },
     }) {
         /*
@@ -86,13 +86,12 @@ export class Contract extends NearContract {
         MINT
     */
     @call
-    nft_mint({ token_id, metadata, receiver_id, perpetual_royalties }) {
+    nft_mint({ token_id, metadata, receiver_id }) {
         return internalMint({
             contract: this,
             tokenId: token_id,
             metadata: metadata,
             receiverId: receiver_id,
-            perpetualRoyalties: perpetual_royalties,
         });
     }
 
