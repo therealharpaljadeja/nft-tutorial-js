@@ -9,13 +9,11 @@ export function internalMint({
     tokenId,
     metadata,
     receiverId,
-    perpetualRoyalties,
 }: {
     contract: Contract;
     tokenId: string;
     metadata: TokenMetadata;
     receiverId: string;
-    perpetualRoyalties: { [key: string]: number };
 }): void {
     /*
         FILL THIS IN

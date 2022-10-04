@@ -2,12 +2,12 @@
 import { Contract } from ".";
 
 //defines the payout type we'll be returning as a part of the royalty standards.
-export class Payout {
-    payout: { [accountId: string]: bigint };
-    constructor({ payout }: { payout: { [accountId: string]: bigint } }) {
-        this.payout = payout;
-    }
-}
+// export class Payout {
+//     payout: { [accountId: string]: bigint };
+//     constructor({ payout }: { payout: { [accountId: string]: bigint } }) {
+//         this.payout = payout;
+//     }
+// }
 
 export class NFTContractMetadata {
     /*

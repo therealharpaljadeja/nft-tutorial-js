@@ -2,20 +2,15 @@
 import {
     NearContract,
     NearBindgen,
-    near,
     call,
     view,
     LookupMap,
     UnorderedMap,
-    Vector,
     UnorderedSet,
+    assert,
+    near,
 } from "near-sdk-js";
-import {
-    NFTContractMetadata,
-    Token,
-    TokenMetadata,
-    internalNftMetadata,
-} from "./metadata";
+import { NFTContractMetadata, Token, TokenMetadata } from "./metadata";
 import { internalMint } from "./mint";
 import {
     internalNftTokens,
@@ -87,6 +82,10 @@ export class Contract extends NearContract {
     */
     @call
     nft_mint({ token_id, metadata, receiver_id }) {
+        assert(
+            near.predecessorAccountId() === this.owner_id,
+            "Only Events contract can mint NFTs"
+        );
         return internalMint({
             contract: this,
             tokenId: token_id,
@@ -179,37 +178,37 @@ export class Contract extends NearContract {
     /*
         ROYALTY
     */
-    @view
-    //calculates the payout for a token given the passed in balance. This is a view method
-    nft_payout({ token_id, balance, max_len_payout }) {
-        return internalNftPayout({
-            contract: this,
-            tokenId: token_id,
-            balance: balance,
-            maxLenPayout: max_len_payout,
-        });
-    }
+    // @view
+    // //calculates the payout for a token given the passed in balance. This is a view method
+    // nft_payout({ token_id, balance, max_len_payout }) {
+    //     return internalNftPayout({
+    //         contract: this,
+    //         tokenId: token_id,
+    //         balance: balance,
+    //         maxLenPayout: max_len_payout,
+    //     });
+    // }
 
-    @call
-    //transfers the token to the receiver ID and returns the payout object that should be payed given the passed in balance.
-    nft_transfer_payout({
-        receiver_id,
-        token_id,
-        approval_id,
-        memo,
-        balance,
-        max_len_payout,
-    }) {
-        return internalNftTransferPayout({
-            contract: this,
-            receiverId: receiver_id,
-            tokenId: token_id,
-            approvalId: approval_id,
-            memo: memo,
-            balance: balance,
-            maxLenPayout: max_len_payout,
-        });
-    }
+    // @call
+    // //transfers the token to the receiver ID and returns the payout object that should be payed given the passed in balance.
+    // nft_transfer_payout({
+    //     receiver_id,
+    //     token_id,
+    //     approval_id,
+    //     memo,
+    //     balance,
+    //     max_len_payout,
+    // }) {
+    //     return internalNftTransferPayout({
+    //         contract: this,
+    //         receiverId: receiver_id,
+    //         tokenId: token_id,
+    //         approvalId: approval_id,
+    //         memo: memo,
+    //         balance: balance,
+    //         maxLenPayout: max_len_payout,
+    //     });
+    // }
 
     @call
     //approve an account ID to transfer a token on your behalf
