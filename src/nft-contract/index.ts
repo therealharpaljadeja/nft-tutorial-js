@@ -175,41 +175,6 @@ export class Contract extends NearContract {
         });
     }
 
-    /*
-        ROYALTY
-    */
-    // @view
-    // //calculates the payout for a token given the passed in balance. This is a view method
-    // nft_payout({ token_id, balance, max_len_payout }) {
-    //     return internalNftPayout({
-    //         contract: this,
-    //         tokenId: token_id,
-    //         balance: balance,
-    //         maxLenPayout: max_len_payout,
-    //     });
-    // }
-
-    // @call
-    // //transfers the token to the receiver ID and returns the payout object that should be payed given the passed in balance.
-    // nft_transfer_payout({
-    //     receiver_id,
-    //     token_id,
-    //     approval_id,
-    //     memo,
-    //     balance,
-    //     max_len_payout,
-    // }) {
-    //     return internalNftTransferPayout({
-    //         contract: this,
-    //         receiverId: receiver_id,
-    //         tokenId: token_id,
-    //         approvalId: approval_id,
-    //         memo: memo,
-    //         balance: balance,
-    //         maxLenPayout: max_len_payout,
-    //     });
-    // }
-
     @call
     //approve an account ID to transfer a token on your behalf
     nft_revoke({ token_id, account_id }) {
